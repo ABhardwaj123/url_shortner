@@ -13,6 +13,9 @@ const createApiKey = async (userId , name) => {
         isActive: true,
     })
 
+    //from createApiKey we are returning {
+        //the random raw api key generated , whole object of api key
+    //}
     return {
         apiKey: rawApiKey,
         keyInfo: newApiKey
