@@ -1,5 +1,6 @@
 import { Url } from "../../models/url.models.js";
 import redis from "../../config/redis.js"
+import { logClick } from "../analytics/analytics.service.js";
 
 const redirectToOriginalUrl = async (req , res) => {
 
@@ -30,6 +31,8 @@ const redirectToOriginalUrl = async (req , res) => {
         // 6. cache it in Redis
         //'EX' is expiry in 3600 seconds(1hr)
         await redis.set(shortCode , actualUrl.originalUrl , 'EX' , 3600)
+
+        logClick(actualUrl._id).catch(err => console.error(err))
         // 7. redirect
         return res.redirect(actualUrl.originalUrl)
 
